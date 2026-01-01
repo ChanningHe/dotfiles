@@ -1,0 +1,27 @@
+# Dotfiles Configuration
+# Single source of truth for dotfiles mappings
+#
+# Format:
+#   [name]
+#   source = "relative/path/in/repo"
+#   target = "relative/path/from/home"  # ~ is prepended automatically
+#
+# Both getdots.sh and Nix module read this file
+
+[nvim]
+source = "nvim"
+target = ".config/nvim"
+
+[p10k]
+source = "p10k/p10k.zsh"
+target = ".p10k.zsh"
+
+# Add more dotfiles here:
+# [tmux]
+# source = "tmux"
+# target = ".config/tmux"
+#
+# [git]
+# source = "git"
+# target = ".config/git"
+
