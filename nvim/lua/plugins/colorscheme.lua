@@ -4,18 +4,26 @@ return {
   -- Add miasma theme
   {
     "xero/miasma.nvim",
-    lazy = false,
+    lazy = true,
     priority = 1000,
     config = function()
       vim.cmd("colorscheme miasma")
     end,
   },
+  {
+    "savq/melange-nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd("colorscheme melange")
+    end
+  },
+
   -- Configure LazyVim to use miasma as default colorscheme
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "miasma",
+      colorscheme = "melange",
     },
   },
 }
-
