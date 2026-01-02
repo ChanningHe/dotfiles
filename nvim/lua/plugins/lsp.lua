@@ -23,16 +23,16 @@ return {
 
   -- Configure mason.nvim to ensure additional tools are installed
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         -- Additional LSP servers not covered by extras
         "bash-language-server",
         "html-lsp",
         "css-lsp",
-        
+
         -- Additional formatters
-        "shfmt", -- Shell formatter
+        "shfmt",      -- Shell formatter
         "shellcheck", -- Shell linter
       },
     },
