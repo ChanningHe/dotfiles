@@ -16,6 +16,10 @@ target = ".config/nvim"
 source = "p10k/p10k.zsh"
 target = ".p10k.zsh"
 
+[ghostty]
+source = "ghostty"
+target = ".config/ghostty"
+
 # Add more dotfiles here:
 # [tmux]
 # source = "tmux"
