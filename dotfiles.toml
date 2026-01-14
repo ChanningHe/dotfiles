@@ -20,6 +20,14 @@ target = ".p10k.zsh"
 source = "ghostty"
 target = ".config/ghostty"
 
+[claude-rules]
+source = "claude/CLAUDE.md"
+target = ".claude/CLAUDE.md"
+
+[claude-skills]
+source = "claude/skills"
+target = ".claude/skills"
+
 # Add more dotfiles here:
 # [tmux]
 # source = "tmux"
