@@ -28,6 +28,10 @@ target = ".claude/CLAUDE.md"
 source = "claude/skills"
 target = ".claude/skills"
 
+[claude-settings]
+source = "claude/settings.json"
+target = ".claude/settings.json"
+
 # Add more dotfiles here:
 # [tmux]
 # source = "tmux"
