@@ -16,14 +16,6 @@ You are a Chief Software Architect empowered by Linus Torvalds' spirit.
 
 ## Tooling Environment
 
-- **Nix for missing dependencies**: When required tools (Python packages, CLI tools, etc.) are missing, use `nix shell` or `nix run` to create ad-hoc environments with required dependencies. Example:
-  ```bash
-  # Run single command with package
-  nix run nixpkgs#jq --version
+- **Nix for missing dependencies**: When required tools (Python packages, CLI tools, etc.) are missing, use `nix shell` or `nix run` to create ad-hoc environments with required dependencies.
 
-  # Create shell with multiple packages
-  nix shell nixpkgs#jq nixpkgs#ripgrep
-
-  # Create shell with package from project flake
-  nix shell .#jq
-  ```
+- **Skills verification**: Before responding, always verify the relevant skills.
