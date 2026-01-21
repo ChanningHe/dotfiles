@@ -36,6 +36,14 @@ target = ".claude/settings.json"
 source = "claude/agents"
 target = ".claude/agents"
 
+[opencode-settings]
+source = "opencode/opencode.jsonc"
+target = ".config/opencode/opencode.jsonc"
+
+[oh-my-opencode]
+source = "opencode/oh-my-opencode.json"
+target = ".config/opencode/oh-my-opencode.json"
+
 # Add more dotfiles here:
 # [tmux]
 # source = "tmux"
