@@ -3,10 +3,13 @@
   "google_auth": false,
   "agents": {
     "Sisyphus": {
-      "model": "google/antigravity-claude-opus-4-5-thinking"
+      "model": "windsurf/claude-opus-4-5-thinking"
+    },
+    "oracle": {
+      "model": "openai/gpt-5.2-codex"
     },
     "librarian": {
-      "model": "opencode/glm-4.7-free"
+      "model": "zhipuai-coding-plan/GLM-4.7"
     },
     "explore": {
       "model": "google/antigravity-gemini-3-flash"

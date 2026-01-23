@@ -3,10 +3,14 @@
   "permission": {
     "bash": {
       "*": "ask",
+      // system tools
       "ls *": "allow",
       "tree *": "allow",
       "find *": "allow",
+      "head *": "allow",
       "rg *": "allow",
+      "grep *": "allow",
+      // lang cli
       "cargo *": "allow",
       "curl *": "allow",
       "go *": "allow",
@@ -15,6 +19,7 @@
       "rustc *": "allow",
       "docker run *": "allow",
       "nix-shell *": "allow",
+      // git
       "git status *": "allow",
       "git log *": "allow",
       "git diff *": "allow",
@@ -23,14 +28,19 @@
       "git push *": "ask",
       "git reset *": "ask"
     },
+    "read": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny"
+    },
+    // edit
     "edit": {
       "*": "ask"
     }
   },
   "plugin": [
-    "opencode-antigravity-auth@1.3.0",
     "oh-my-opencode",
-    "opencode-openai-codex-auth"
+    "opencode-windsurf-auth@beta"
   ], 
   "mcp": {
     "context7": {
@@ -62,142 +72,24 @@
   // provider && models
   //
   "provider": {
-    "google": {
-      "name": "Google",
-      "models": {
-        "antigravity-gemini-3-pro-high": {
-          "name": "Gemini 3 Pro High (Antigravity)",
-          "thinking": true,
-          "attachment": true,
-          "limit": {
-            "context": 1048576,
-            "output": 65535
-          },
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "pdf"
-            ],
-            "output": [
-              "text"
-            ]
-          }
-        },
-        "antigravity-gemini-3-pro-low": {
-          "name": "Gemini 3 Pro Low (Antigravity)",
-          "thinking": true,
-          "attachment": true,
-          "limit": {
-            "context": 1048576,
-            "output": 65535
-          },
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "pdf"
-            ],
-            "output": [
-              "text"
-            ]
-          }
-        },
-        "antigravity-gemini-3-flash": {
-          "name": "Gemini 3 Flash (Antigravity)",
-          "attachment": true,
-          "limit": {
-            "context": 1048576,
-            "output": 65536
-          },
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "pdf"
-            ],
-            "output": [
-              "text"
-            ]
-          }
-        },
-        "antigravity-claude-sonnet-4-5": {
-          "name": "Claude Sonnet 4.5 (Antigravity)",
-          "limit": {
-            "context": 200000,
-            "output": 64000
-          },
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "pdf"
-            ],
-            "output": [
-              "text"
-            ]
-          }
-        },
-        "antigravity-claude-sonnet-4-5-thinking": {
-          "name": "Claude Sonnet 4.5 Thinking (Antigravity)",
-          "limit": {
-            "context": 200000,
-            "output": 64000
-          },
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "pdf"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "variants": {
-            "low": {
-              "thinkingConfig": {
-                "thinkingBudget": 8192
-              }
-            },
-            "max": {
-              "thinkingConfig": {
-                "thinkingBudget": 32768
-              }
-            }
-          }
-        },
-        "antigravity-claude-opus-4-5-thinking": {
-          "name": "Claude Opus 4.5 Thinking (Antigravity)",
-          "limit": {
-            "context": 200000,
-            "output": 64000
-          },
-          "modalities": {
-            "input": [
-              "text",
-              "image",
-              "pdf"
-            ],
-            "output": [
-              "text"
-            ]
-          },
-          "variants": {
-            "low": {
-              "thinkingConfig": {
-                "thinkingBudget": 8192
-              }
-            },
-            "max": {
-              "thinkingConfig": {
-                "thinkingBudget": 32768
-              }
+    // zhipu
+    "zhipuai-coding-plan": {
+        //"api": "https://open.bigmodel.cn/api/coding/paas/v4",
+        "models": {
+          "GLM-4.7": {
+            "name": "GLM 4.7",
+            "limit": {
+              "context": 200000,
+              "output": 64000
             }
           }
         }
-      }
     },
+    // // google
+    // "google": {
+    //   "name": "Google",
+    // },
+    // openai
     "openai": {
       "name": "OpenAI",
       "options": {
@@ -327,6 +219,53 @@
               "reasoningSummary": "detailed",
               "textVerbosity": "medium"
             }
+          }
+        }
+      }
+    },
+    "windsurf": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:42100/v1"
+      },
+      "models": {
+        "claude-4.5-opus-thinking": {
+          "name": "Claude 4.5 Opus Thinking (Windsurf)",
+          "limit": {
+            "context": 200000,
+            "output": 8192
+          }
+        },
+        "gpt-5.1-codex-max": {
+          "name": "GPT 5.1 Codex Max (Windsurf)",
+          "limit": {
+            "context": 200000,
+            "output": 8192
+          },
+          "variants": {
+            "low": {},
+            "medium": {},
+            "high": {}
+          }
+        },
+        "gemini-3.0-pro": {
+          "name": "Gemini 3.0 Pro (Windsurf)",
+          "limit": {
+            "context": 200000,
+            "output": 8192
+          },
+          "variants": {
+            "minimal": {},
+            "low": {},
+            "medium": {},
+            "high": {}
+          }
+        },
+        "glm-4.7-fast": {
+          "name": "GLM 4.7 Fast (Windsurf)",
+          "limit": {
+            "context": 200000,
+            "output": 8192
           }
         }
       }

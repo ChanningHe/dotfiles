@@ -20,7 +20,11 @@ target = ".p10k.zsh"
 source = "ghostty"
 target = ".config/ghostty"
 
-[claude-rules]
+##
+## claude
+##
+
+[claude-main]
 source = "claude/CLAUDE.md"
 target = ".claude/CLAUDE.md"
 
@@ -35,6 +39,22 @@ target = ".claude/settings.json"
 [claude-agents]
 source = "claude/agents"
 target = ".claude/agents"
+
+[claude-hooks]
+source = "claude/hooks"
+target = ".claude/hooks"
+
+[claude-rules]
+source = "claude/rules"
+target = ".claude/rules"
+
+[claude-commands]
+source = "claude/commands"
+target = ".claude/commands"
+
+##
+## opencode
+##
 
 [opencode-settings]
 source = "opencode/opencode.jsonc"

@@ -19,4 +19,5 @@ claude mcp add --transport http grep https://mcp.grep.app
 确保列表中包含 context7 和 grep 两个服务。
 
 References && License: 
+- [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code)
 - [kingkongshot/prompts with Apache License](https://github.com/kingkongshot/prompts)
