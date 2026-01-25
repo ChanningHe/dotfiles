@@ -44,5 +44,5 @@ window-padding-y = 4
 # resize-overlay-duration = 4s 200ms
 #Monokai Pro Light Sun Gruvbox Light Hard
 theme = dark:Gruvbox Dark,light:Monokai Pro Light Sun
-shell-integration-features = ssh-terminfo,ssh-env
+shell-integration-features = ssh-terminfo,ssh-env,sudo
 font-family = "SFMono Nerd Font"

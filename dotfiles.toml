@@ -64,6 +64,10 @@ target = ".config/opencode/opencode.jsonc"
 source = "opencode/oh-my-opencode.json"
 target = ".config/opencode/oh-my-opencode.json"
 
+# [opencode-agents]
+# source = "claude/agents"
+# target = ".config/opencode/agents"
+
 # Add more dotfiles here:
 # [tmux]
 # source = "tmux"
