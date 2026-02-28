@@ -20,6 +20,9 @@ target = ".p10k.zsh"
 source = "ghostty"
 target = ".config/ghostty"
 
+[kitty]
+source = "kitty"
+target = ".config/kitty"
 ##
 ## claude
 ##
