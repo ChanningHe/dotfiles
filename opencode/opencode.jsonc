@@ -72,22 +72,35 @@
   // provider && models
   //
   "provider": {
-    // zhipu
-    "zhipuai-coding-plan": {
-      //"api": "https://open.bigmodel.cn/api/coding/paas/v4",
+    // zenmux
+    "zenmux": {
       "models": {
         "glm-5": {
           "name": "GLM-5",
           "limit": {
             "context": 200000,
-            "output": 64000
+            "output": 128000
           }
         },
-        "glm-4.7": {
-          "name": "GLM-4.7",
+        "claude-opus-4.6": {
+          "name": "ZenMux Opus 4.6",
           "limit": {
             "context": 200000,
             "output": 64000
+          }
+        },
+        "claude-sonnet-4.6": {
+          "name": "ZenMux Sonnet 4.6",
+          "limit": {
+            "context": 200000,
+            "output": 64000
+          }
+        },
+        "kimi-k2.5": {
+          "name": "ZenMux Kimi K2.5",
+          "limit": {
+            "context": 262140,
+            "output": 262140
           }
         }
       }
