@@ -218,5 +218,6 @@
       ],
       "description": "Web search"
     }
-  }
+  },
+  "model": "opus"
 }

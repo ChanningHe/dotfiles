@@ -7,11 +7,11 @@ return {
     end,
   },
 
-  -- correctly setup mason lsp / dap extensions
-  {
-    "mason-org/mason.nvim",
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "nil" })
-    end,
-  },
+  -- -- correctly setup mason lsp / dap extensions
+  -- {
+  --   "mason-org/mason.nvim",
+  --   opts = function(_, opts)
+  --     vim.list_extend(opts.ensure_installed, { "nil" })
+  --   end,
+  -- },
 }
