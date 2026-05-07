@@ -174,9 +174,13 @@
       }
     ]
   },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true
+  },
   "companyAnnouncements": [
     "Welcome!"
   ],
+  "theme": "light",
   "mcpServers": {
     "memory": {
       "command": "npx",

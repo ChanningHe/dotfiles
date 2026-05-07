@@ -47,8 +47,7 @@ theme = dark:Gruvbox Dark,light:Rose Pine Dawn
 #theme = dark:Gruvbox Dark,light: Apple System Colors Light
 #theme = Dawnfox
 #theme = Rose Pine Dawn
-shell-integration-features = ssh-terminfo,ssh-env
-shell-integration-features = sudo
+shell-integration-features = ssh-terminfo,ssh-env,sudo
 font-family = ""
 font-family = "SFMono Nerd Font"
 keybind = global:cmd+backquote=toggle_visibility
