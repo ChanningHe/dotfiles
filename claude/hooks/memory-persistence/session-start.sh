@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # SessionStart Hook - Load previous context on new session
 #
 # Runs when a new Claude session starts. Checks for recent session

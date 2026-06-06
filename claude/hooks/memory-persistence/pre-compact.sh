@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # PreCompact Hook - Save state before context compaction
 #
 # Runs before Claude compacts context, giving you a chance to

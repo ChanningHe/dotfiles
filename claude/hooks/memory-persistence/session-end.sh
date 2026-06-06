@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Stop Hook (Session End) - Persist learnings when session ends
 #
 # Runs when Claude session ends. Creates/updates session log file

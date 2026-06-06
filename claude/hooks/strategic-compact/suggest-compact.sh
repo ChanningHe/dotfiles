@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Strategic Compact Suggester
 # Runs on PreToolUse or periodically to suggest manual compaction at logical intervals
 #
