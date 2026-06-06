@@ -1,5 +1,6 @@
 {
   "permissions": {
+    "defaultMode": "auto",
     "allow": [
       "WebSearch",
       "Bash(grep:*)",
@@ -20,11 +21,7 @@
       "Bash(git diff:*)",
       "Bash(git fetch:*)"
     ],
-    "deny": [
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Bash(git reset:*)"
-    ]
+    "deny": ["Bash(git commit:*)", "Bash(git push:*)", "Bash(git reset:*)"]
   },
   "hooks": {
     "PreToolUse": [
@@ -177,51 +174,35 @@
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true
   },
-  "companyAnnouncements": [
-    "Welcome!"
-  ],
+  "companyAnnouncements": ["Welcome!"],
   "theme": "light",
   "mcpServers": {
     "memory": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-memory"
-      ],
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
       "description": "Persistent memory across sessions"
     },
     "sequential-thinking": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ],
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
       "description": "Chain-of-thought reasoning"
     },
     "context7": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@context7/mcp-server"
-      ],
+      "args": ["-y", "@context7/mcp-server"],
       "description": "Live documentation lookup"
     },
     "grep": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@grepapp/mcp-server"
-      ],
+      "args": ["-y", "@grepapp/mcp-server"],
       "description": "Code search and context"
     },
     "websearch": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-websearch"
-      ],
+      "args": ["-y", "@modelcontextprotocol/server-websearch"],
       "description": "Web search"
     }
   },
-  "model": "opus"
+  "model": "opus",
+  "skipWorkflowUsageWarning": true
 }
