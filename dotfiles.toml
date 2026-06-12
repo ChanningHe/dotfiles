@@ -23,6 +23,11 @@ target = ".config/ghostty"
 [kitty]
 source = "kitty"
 target = ".config/kitty"
+
+[zsh-patina]
+source = "zsh-patina/config.toml"
+target = ".config/zsh-patina/config.toml"
+
 ##
 ## claude
 ##
@@ -79,4 +84,3 @@ target = ".config/opencode/oh-my-opencode.json"
 # [git]
 # source = "git"
 # target = ".config/git"
-
