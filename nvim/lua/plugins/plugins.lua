@@ -4,7 +4,16 @@ return {
     "m4xshen/hardtime.nvim",
     lazy = false,
     dependencies = { "MunifTanjim/nui.nvim" },
-    opts = {},
+    opts = {
+      -- Default is { "", "i" }: arrows blocked in insert mode too.
+      -- Keep them blocked in normal/visual ("") but allow in insert.
+      disabled_keys = {
+        ["<Up>"] = { "" },
+        ["<Down>"] = { "" },
+        ["<Left>"] = { "" },
+        ["<Right>"] = { "" },
+      },
+    },
   },
   {
     "lambdalisue/vim-suda",
