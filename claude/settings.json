@@ -1,6 +1,5 @@
 {
   "permissions": {
-    "defaultMode": "auto",
     "allow": [
       "WebSearch",
       "Bash(grep:*)",
@@ -19,12 +18,26 @@
       "Bash(git status:*)",
       "Bash(git log:*)",
       "Bash(git diff:*)",
-      "Bash(git fetch:*)"
+      "Bash(git fetch:*)",
+      "Bash(git commit:*)",
+      "Bash(git add:*)"
     ],
-    "deny": ["Bash(git commit:*)", "Bash(git push:*)", "Bash(git reset:*)"]
+    "deny": ["Bash(git push:*)", "Bash(git reset:*)"],
+    "ask": [],
+    "defaultMode": "auto"
   },
+  "model": "opus",
   "hooks": {
     "PreToolUse": [
+      {
+        "matcher": "tool == \"Bash\" && tool_input.command matches \"git commit\"",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/conventional-commit/validate.sh"
+          }
+        ]
+      },
       {
         "matcher": "tool == \"Bash\" && tool_input.command matches \"(npm run dev|pnpm( run)? dev|yarn dev|bun run dev)\"",
         "hooks": [
@@ -175,7 +188,9 @@
     "gopls-lsp@claude-plugins-official": true
   },
   "companyAnnouncements": ["Welcome!"],
+  "skipWorkflowUsageWarning": true,
   "theme": "light",
+  "agentPushNotifEnabled": true,
   "mcpServers": {
     "memory": {
       "command": "npx",
@@ -202,7 +217,5 @@
       "args": ["-y", "@modelcontextprotocol/server-websearch"],
       "description": "Web search"
     }
-  },
-  "model": "opus",
-  "skipWorkflowUsageWarning": true
+  }
 }

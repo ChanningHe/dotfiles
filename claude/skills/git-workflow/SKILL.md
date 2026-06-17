@@ -26,6 +26,8 @@ Follow Conventional Commits strictly:
 - `docs`: Documentation changes
 - `style`: Code style changes (formatting, etc.)
 - `chore`: Maintenance tasks
+- `build`: Build system or dependency changes
+- `ci`: CI/CD configuration changes
 
 **Examples**:
 ```
@@ -53,6 +55,23 @@ Fixes #456
 3. **No period at end of subject**
 4. **Body explains WHY**, not WHAT (code shows what)
 5. **Reference issues**: Use `Closes #123` or `Refs #456`
+
+## Enforcement (auto-blocked)
+
+A PreToolUse hook (`~/.claude/hooks/conventional-commit/validate.sh`) validates
+the subject line of every `git commit` you run and **blocks it (exit 2)** when it
+does not conform. Get the format right on the FIRST attempt — do not commit and
+wait to be rejected.
+
+The hook enforces, on the subject line only:
+
+- Pattern `type(scope): description`; **scope is optional** (`feat: ...` is valid)
+- `type` must be one of: `feat fix refactor chore docs style test build ci perf`
+- Subject length **≤ 50 chars**
+- **No trailing period**
+
+Body/footer are not checked by the hook — follow the guidance above for those.
+Before committing, mentally check the subject against these four rules.
 
 ## Branch Strategy
 
