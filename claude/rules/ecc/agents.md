@@ -15,6 +15,8 @@ Located in `~/.claude/agents/`:
 | e2e-runner | E2E testing | Critical user flows |
 | refactor-cleaner | Dead code cleanup | Code maintenance |
 | doc-updater | Documentation | Updating docs |
+| rust-reviewer | Rust code review | Rust projects |
+| harmonyos-app-resolver | HarmonyOS app development | HarmonyOS/ArkTS projects |
 
 ## Immediate Agent Usage
 
@@ -31,9 +33,9 @@ ALWAYS use parallel Task execution for independent operations:
 ```markdown
 # GOOD: Parallel execution
 Launch 3 agents in parallel:
-1. Agent 1: Security analysis of auth.ts
+1. Agent 1: Security analysis of auth module
 2. Agent 2: Performance review of cache system
-3. Agent 3: Type checking of utils.ts
+3. Agent 3: Type checking of utilities
 
 # BAD: Sequential when unnecessary
 First agent 1, then agent 2, then agent 3
