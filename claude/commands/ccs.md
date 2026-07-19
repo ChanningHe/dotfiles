@@ -1,1 +1,0 @@
-/Users/channinghe/.ccs/.claude/commands/ccs.md
