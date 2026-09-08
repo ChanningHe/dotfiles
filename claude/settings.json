@@ -29,7 +29,7 @@
     "ask": [],
     "defaultMode": "auto"
   },
-  "model": "opus",
+  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -53,6 +53,10 @@
       }
     ]
   },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "ecc@ecc": true
+  },
   "extraKnownMarketplaces": {
     "ecc": {
       "source": {
@@ -61,13 +65,11 @@
       }
     }
   },
-  "enabledPlugins": {
-    "gopls-lsp@claude-plugins-official": true,
-    "ecc@ecc": true
-  },
+  "effortLevel": "high",
   "companyAnnouncements": [
     "Welcome!"
   ],
+  "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "light",
   "agentPushNotifEnabled": true,
@@ -112,6 +114,5 @@
       ],
       "description": "Web search"
     }
-  },
-  "tui": "fullscreen"
+  }
 }

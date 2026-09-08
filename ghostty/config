@@ -51,3 +51,6 @@ shell-integration-features = ssh-terminfo,ssh-env,sudo
 font-family = ""
 font-family = "SFMono Nerd Font"
 keybind = global:cmd+backquote=toggle_visibility
+# flyline
+cursor-click-to-move = false
+macos-option-as-alt = true
