@@ -77,9 +77,9 @@ target = ".config/opencode/oh-my-opencode.json"
 # target = ".config/opencode/agents"
 
 # Add more dotfiles here:
-# [tmux]
-# source = "tmux"
-# target = ".config/tmux"
+[tmux]
+source = "tmux/tmux.conf"
+target = ".tmux.conf"
 #
 # [git]
 # source = "git"
