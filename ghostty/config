@@ -54,3 +54,5 @@ keybind = global:cmd+backquote=toggle_visibility
 # flyline
 cursor-click-to-move = false
 macos-option-as-alt = true
+# for macos
+window-colorspace = display-p3

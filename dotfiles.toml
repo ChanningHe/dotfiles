@@ -28,6 +28,10 @@ target = ".config/kitty"
 source = "zsh-patina/config.toml"
 target = ".config/zsh-patina/config.toml"
 
+[flyline]
+source = "flyline"
+target = ".config/flyline"
+
 ##
 ## claude
 ##
