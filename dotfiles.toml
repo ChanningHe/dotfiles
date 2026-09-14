@@ -48,9 +48,9 @@ target = ".claude/skills"
 source = "claude/settings.json"
 target = ".claude/settings.json"
 
-[claude-agents]
-source = "claude/agents"
-target = ".claude/agents"
+# [claude-agents]
+# source = "claude/agents"
+# target = ".claude/agents"
 
 [claude-hooks]
 source = "claude/hooks"
