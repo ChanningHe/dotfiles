@@ -60,21 +60,14 @@ target = ".claude/hooks"
 source = "claude/rules"
 target = ".claude/rules"
 
-[claude-commands]
-source = "claude/commands"
-target = ".claude/commands"
+#[claude-commands]
+#source = "claude/commands"
+#target = ".claude/commands"
 
 ##
 ## opencode
 ##
 
-[opencode-settings]
-source = "opencode/opencode.jsonc"
-target = ".config/opencode/opencode.jsonc"
-
-[oh-my-opencode]
-source = "opencode/oh-my-opencode.json"
-target = ".config/opencode/oh-my-opencode.json"
 
 # [opencode-agents]
 # source = "claude/agents"
