@@ -135,7 +135,7 @@ flake.nix
 
 ## Commands: justfile hooks and spawn.sh state machine
 
-**justfile pre/post hooks.** `rebuild`, `build`, `rebuild-full`, and `rebuild-trace` all wrap with `rebuild-pre && rebuild-post`:
+**justfile pre/post hooks.** `switch`, `build`, and `switch-full` all wrap with the private hooks `rebuild-pre && rebuild-post` (`build` only uses `rebuild-pre`):
 
 - `rebuild-pre: update-nix-secrets` then `git add --intent-to-add .` — the `--intent-to-add` is what makes untracked files visible to `nix flake eval` (flake source tracking ignores untracked files entirely; intent-to-add lifts them into the index without staging contents).
 - `rebuild-post: check-sops` — runs `scripts/check-sops.sh` to verify `sops-nix` activation succeeded, so a silent decryption failure does not pretend to be a successful switch.

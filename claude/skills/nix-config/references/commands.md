@@ -21,19 +21,18 @@ Commands listed here are for the user to run; the agent should suggest, not exec
 
 | Command | What it does |
 | --- | --- |
-| `just rebuild` | Switch the current host. Calls `scripts/rebuild.sh`; prefers `nh os switch` / `nh darwin switch` when `nh` is on `PATH`, otherwise falls back to `sudo nixos-rebuild switch` / `darwin-rebuild switch`. On Darwin with no `nh` and no `darwin-rebuild` yet, the script first builds `.#darwinConfigurations.<host>.system` and invokes the freshly-built `result/sw/bin/darwin-rebuild` — this is what makes the first-ever switch on a clean Mac work. On success and a clean tree, tags HEAD as `buildable-<YYYYMMDDHHMMSS>` so you can locate the last known-good commit. |
+| `just switch` | Switch the current host (mirrors `nixos-rebuild switch`). Calls `scripts/rebuild.sh`; prefers `nh os switch` / `nh darwin switch` when `nh` is on `PATH`, otherwise falls back to `sudo nixos-rebuild switch` / `darwin-rebuild switch`. On Darwin with no `nh` and no `darwin-rebuild` yet, the script first builds `.#darwinConfigurations.<host>.system` and invokes the freshly-built `result/sw/bin/darwin-rebuild` — this is what makes the first-ever switch on a clean Mac work. On success and a clean tree, tags HEAD as `buildable-<YYYYMMDDHHMMSS>` so you can locate the last known-good commit. |
 | `just build` | Dry-run via `scripts/rebuild.sh build`. Builds the system closure but does not activate. |
-| `just rebuild-trace` | Switch with the trace flag forwarded explicitly to `nixos-rebuild`/`darwin-rebuild`, then runs `just check` (same tail as `rebuild-full`). |
-| `just rebuild-full` | Switch, then `just check`. Slow; use before pushing. |
+| `just switch-full` | Switch, then `just check`. Slow; use before pushing. |
 | `just check [ARGS]` | `nix flake check --impure --keep-going --show-trace` against the main flake, then the same against the nested `nixos-anywhere/` flake (separate flake for the installer pipeline). |
 | `just diff` | `git diff` filtered with `:!flake.lock` so churn from input updates does not drown signal. |
 | `just update` | `nix flake update` — bumps every input in `flake.lock`. |
-| `just rebuild-update` | `update` then `rebuild`. |
-| `just update-nix-secrets` | `cd ../nix-secrets`, then `git fetch && (git rebase > /dev/null 2>&1 \|\| true)`, then `nix flake update nix-secrets --timeout 5`. Rebase failures are silently ignored, so a dirty or diverged `nix-secrets` checkout will still let the rebuild proceed. Runs automatically before every rebuild (see hooks below). |
-| `just check-sops` | Verify SOPS-nix actually decrypted at activation. Runs automatically after every rebuild. |
+| `just switch-update` | `update` then `switch`. |
+| `just update-nix-secrets` | `cd ../nix-secrets`, then `git fetch && (git rebase > /dev/null 2>&1 \|\| true)`, then `nix flake update nix-secrets --timeout 5`. Rebase failures are silently ignored, so a dirty or diverged `nix-secrets` checkout will still let the rebuild proceed. Runs automatically before every `switch` / `build` (see hooks below). |
+| `just check-sops` | Verify SOPS-nix actually decrypted at activation. Runs automatically after every `switch`. |
 | `just reset-repo` | `git fetch origin && git reset --hard origin/master`. Destructive — discards every local change in the working tree, no confirmation. |
 
-`scripts/rebuild.sh` on Darwin also bootstraps `~/.config/nix/nix.conf` (enables `nix-command flakes`), installs xcode-select tools, and runs the Homebrew install if `/opt/homebrew/bin/brew` is missing. That bootstrap path is why a fresh Mac can run `just rebuild` from a clean checkout.
+`scripts/rebuild.sh` on Darwin also bootstraps `~/.config/nix/nix.conf` (enables `nix-command flakes`), installs xcode-select tools, and runs the Homebrew install if `/opt/homebrew/bin/brew` is missing. That bootstrap path is why a fresh Mac can run `just switch` from a clean checkout.
 
 ## New-host provisioning
 
@@ -87,12 +86,12 @@ These edit `../nix-secrets/.sops.yaml` and `secrets/*.yaml`.
 
 ## Automatic pre and post hooks
 
-The `rebuild` family declares dependencies in the justfile so they always run:
+`switch`, `build`, and `switch-full` declare these `[private]` hooks as dependencies so they always run (hidden from `just --list`):
 
-- `rebuild-pre: update-nix-secrets` — pulls and rebases `../nix-secrets`, then `nix flake update nix-secrets --timeout 5`. This is why `rebuild` always sees the latest secrets even if you forgot to bump the input. Also runs `git add --intent-to-add .` so flakes see newly-created (but unstaged) files.
-- `rebuild-post: check-sops` — runs after `rebuild`. Fails loudly if any sops-managed file did not decrypt, which is the most common silent breakage after a key rotation.
+- `rebuild-pre: update-nix-secrets` — pulls and rebases `../nix-secrets`, then `nix flake update nix-secrets --timeout 5`. This is why `switch` always sees the latest secrets even if you forgot to bump the input. Also runs `git add --intent-to-add .` so flakes see newly-created (but unstaged) files.
+- `rebuild-post: check-sops` — runs after `switch`. Fails loudly if any sops-managed file did not decrypt, which is the most common silent breakage after a key rotation.
 
-`build` only depends on `rebuild-pre` (no point checking sops on a dry run). `rebuild-full` and `rebuild-trace` both run `rebuild-post` as well, so they exercise the full pre/rebuild/check-sops loop.
+`build` only depends on `rebuild-pre` (no point checking sops on a dry run). `switch` and `switch-full` run `rebuild-post` as well, so they exercise the full pre/switch/check-sops loop.
 
 ## Dev shell
 
@@ -108,7 +107,6 @@ The script is positional. `HOST` defaults to `$(hostname)` and `ACTION` to `swit
 | --- | --- |
 | `scripts/rebuild.sh` | `ACTION=switch`, `HOST=$(hostname)` — the default daily path. |
 | `scripts/rebuild.sh build` | `ACTION=build` — dry-run. Builds the closure, does not activate, does not tag. |
-| `scripts/rebuild.sh trace` | `switch` with `--show-trace` forwarded to the underlying rebuild tool. |
 | `scripts/rebuild.sh <hostname>` | Switch using `.#<hostname>` instead of `$(hostname)`. **Caveat**: this only takes effect on the non-`nh` fallback path (`sudo nixos-rebuild` / `darwin-rebuild`). When `nh` is on `PATH` (the preferred path), the script invokes `nh os/darwin $ACTION . -- --impure --show-trace` and the host argument is ignored — uninstall `nh` or invoke `nixos-rebuild` directly to switch under a non-default host name. |
 
 The `buildable-*` tag is only written when both `git diff --exit-code` and `git diff --staged --exit-code` are clean — uncommitted changes mean the working tree is not what was actually built, so tagging would lie.

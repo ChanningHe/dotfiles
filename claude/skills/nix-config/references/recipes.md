@@ -266,7 +266,7 @@ Wire both: add the system file to the host's `imports`, and add `common/optional
 
 For NixOS, prefer the scripted path — `just new-host <name>` scaffolds the host directory and the `home/<user>/<name>.nix` file, then `just spawn <name> -d <ip> --disk-layout <layout>` runs disk + install. Disk-layout values supported by the spawn flow are the keys under `disko/layouts/` (e.g. `ext4`, `zfs-impermanence-luks`); the `default-disk-config` host option pins the matching layout when no flag is passed. On the first rebuild after a fresh provision, set `hostSpec.useAtticCache = false;` so the host does not hang on the LAN-only binary cache before routing is healthy.
 
-For Darwin, no provisioning script — create `hosts/darwin/<name>/default.nix` (no `hardware-configuration.nix` needed) and `home/<user>/<name>.nix`, then run `just rebuild` on the Mac itself. Set `system.stateVersion = 6;` (integer for nix-darwin, not a string).
+For Darwin, no provisioning script — create `hosts/darwin/<name>/default.nix` (no `hardware-configuration.nix` needed) and `home/<user>/<name>.nix`, then run `just switch` on the Mac itself. Set `system.stateVersion = 6;` (integer for nix-darwin, not a string).
 
 Secrets pieces are user-operated. They consist of (1) a host age key registered in `.sops.yaml` under `keys:` and granted access to the relevant `creation_rules`, (2) a password hash in `secrets/shared.yaml` keyed under `users.<username>.hashedPassword`, and (3) per-host data in `secrets/<host>.yaml` matching the `serviceInfo` / `networkStorageInfo` / `nvmeofInfo` shapes consumed by modules. Do not script edits to encrypted files — the user runs `sops` directly.
 

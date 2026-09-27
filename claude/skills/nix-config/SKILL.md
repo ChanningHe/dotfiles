@@ -1,6 +1,6 @@
 ---
 name: nix-config
-description: Extends and operates the user's NixOS + Darwin monorepo at /Volumes/Codes/nix-src/{nix-config,nix-secrets}. Use when adding or editing a host, user, home-manager module, system module, service, package, overlay, or sops secret; when wiring hostSpec, networkInfo, serviceInfo, or sshClientsInfo from nix-secrets; when touching files under hosts/, home/, modules/, pkgs/, overlays/, lib/, or flake.nix; when invoking just recipes (rebuild, spawn, deploy, check, update, attic-push) or running nixos-rebuild, darwin-rebuild, nh, deploy-rs, nixos-anywhere, disko, sops, or age; when debugging hostSpec assertions, mismatched system.stateVersion (string for NixOS, int for Darwin), broken scanPaths auto-imports, or sops decryption failures; whenever a .nix file in this repo is the target, even when the user just says "add module", "add service", or "rebuild".
+description: Extends and operates the user's NixOS + Darwin monorepo at /Volumes/Codes/nix-src/{nix-config,nix-secrets}. Use when adding or editing a host, user, home-manager module, system module, service, package, overlay, or sops secret; when wiring hostSpec, networkInfo, serviceInfo, or sshClientsInfo from nix-secrets; when touching files under hosts/, home/, modules/, pkgs/, overlays/, lib/, or flake.nix; when invoking just recipes (switch, build, spawn, deploy, check, update, attic-push) or running nixos-rebuild, darwin-rebuild, nh, deploy-rs, nixos-anywhere, disko, sops, or age; when debugging hostSpec assertions, mismatched system.stateVersion (string for NixOS, int for Darwin), broken scanPaths auto-imports, or sops decryption failures; whenever a .nix file in this repo is the target, even when the user just says "add module", "add service", or "rebuild".
 ---
 
 # nix-config
@@ -121,7 +121,7 @@ Why this split: core is the always-on baseline; optional gives per-host granular
 
 ### Adding a host
 
-NixOS: scaffold + remote install via `just spawn <Name> -d <ip> --disk-layout <layout>`. Darwin: create `hosts/darwin/<Name>/default.nix` + `home/<user>/<Name>.nix`, then run `just rebuild` locally on that Mac. Full file templates and the spawn state machine: `references/recipes.md` Recipe 7 "Add a new host (brief)" and `references/commands.md`.
+NixOS: scaffold + remote install via `just spawn <Name> -d <ip> --disk-layout <layout>`. Darwin: create `hosts/darwin/<Name>/default.nix` + `home/<user>/<Name>.nix`, then run `just switch` locally on that Mac. Full file templates and the spawn state machine: `references/recipes.md` Recipe 7 "Add a new host (brief)" and `references/commands.md`.
 
 ### Adding a user
 
@@ -165,7 +165,7 @@ Tell the user which YAML key to add (e.g. `"komodo/core_public_keys"`) and which
 The most common targets. Full catalog (27 just targets) and the `nix-config/scripts/spawn.sh` state machine: `references/commands.md`.
 
 ```
-just rebuild               # rebuild current host (nh os/darwin switch via nix-config/scripts/rebuild.sh)
+just switch                # switch current host (nh os/darwin switch via nix-config/scripts/rebuild.sh)
 just check                 # nix flake check
 just update                # nix flake update
 just spawn <Name> -d <ip> --disk-layout <ext4|zfs|btrfs|zfs-mirror>
