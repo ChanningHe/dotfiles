@@ -21,6 +21,9 @@ NC='\033[0m'
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_FILE="${SCRIPT_DIR}/dotfiles.toml"
 
+# Names of entries that failed to install; reported as a summary at the end
+FAILED=()
+
 # Logging functions
 log_info()    { echo -e "${BLUE}[INFO]${NC} $1"; }
 log_success() { echo -e "${GREEN}[OK]${NC} $1"; }
@@ -117,18 +120,26 @@ create_link() {
         if [[ "$current_link" == "$source" ]]; then
             log_success "Already linked: $target"
             return 0
-        else
-            log_info "Updating symlink: $target"
-            [[ "$dry_run" != "true" ]] && rm "$target"
+        fi
+        log_info "Updating symlink: $target"
+        if [[ "$dry_run" != "true" ]] && ! rm "$target"; then
+            log_error "Cannot remove existing symlink: $target"
+            return 1
         fi
     elif [[ -e "$target" ]]; then
         if [[ "$force" == "true" ]]; then
             log_warn "Removing existing: $target"
-            [[ "$dry_run" != "true" ]] && rm -rf "$target"
+            if [[ "$dry_run" != "true" ]] && ! rm -rf "$target"; then
+                log_error "Cannot remove existing target: $target"
+                return 1
+            fi
         else
             local backup="${target}.bak.$(date +%Y%m%d%H%M%S)"
             log_warn "Backing up: $target -> $backup"
-            [[ "$dry_run" != "true" ]] && mv "$target" "$backup"
+            if [[ "$dry_run" != "true" ]] && ! mv "$target" "$backup"; then
+                log_error "Cannot back up existing target: $target"
+                return 1
+            fi
         fi
     fi
 
@@ -136,32 +147,55 @@ create_link() {
     local parent_dir
     parent_dir=$(dirname "$target")
     if [[ ! -d "$parent_dir" ]]; then
-        [[ "$dry_run" == "true" ]] && echo "  Would create: $parent_dir"
-        [[ "$dry_run" != "true" ]] && mkdir -p "$parent_dir"
+        if [[ "$dry_run" == "true" ]]; then
+            echo "  Would create: $parent_dir"
+        elif ! mkdir -p "$parent_dir"; then
+            log_error "Cannot create parent directory: $parent_dir"
+            return 1
+        fi
     fi
 
     # Create symlink
     if [[ "$dry_run" == "true" ]]; then
         echo "  Would link: $target -> $source"
-    else
-        ln -s "$source" "$target"
-        log_success "Linked: $target -> $source"
+        return 0
     fi
+
+    if ! ln -s "$source" "$target"; then
+        log_error "Failed to link: $target -> $source"
+        return 1
+    fi
+    log_success "Linked: $target -> $source"
+}
+
+# Validate a target path read from config (must stay a relative path under $HOME)
+validate_target() {
+    local target="$1"
+    if [[ -z "$target" || "$target" == /* || "$target" == *".."* ]]; then
+        log_error "Unsafe target path: '${target}'"
+        return 1
+    fi
+}
+
+# Link a single parsed entry
+install_entry() {
+    local name="$1" source="$2" target="$3"
+
+    validate_target "$target" || return 1
+    create_link "${SCRIPT_DIR}/${source}" "${HOME}/${target}"
 }
 
 # Install a single dotfile by name
 install_dotfile() {
     local name="$1"
     local found=false
+    local status=0
 
     while IFS='|' read -r entry_name source target; do
         if [[ "$entry_name" == "$name" ]]; then
             found=true
-            local full_source="${SCRIPT_DIR}/${source}"
-            local full_target="${HOME}/${target}"
-            
             log_info "Installing ${name}..."
-            create_link "$full_source" "$full_target"
+            install_entry "$name" "$source" "$target" || status=1
             break
         fi
     done < <(parse_toml)
@@ -171,16 +205,18 @@ install_dotfile() {
         echo "Run '$0 -l' to see available dotfiles"
         return 1
     fi
+
+    return "$status"
 }
 
 # Install all dotfiles
+# Never aborts on a single failure: bad entries are collected and reported at the end.
 install_all() {
     while IFS='|' read -r name source target; do
-        local full_source="${SCRIPT_DIR}/${source}"
-        local full_target="${HOME}/${target}"
-        
         log_info "Installing ${name}..."
-        create_link "$full_source" "$full_target"
+        if ! install_entry "$name" "$source" "$target"; then
+            FAILED+=("$name")
+        fi
     done < <(parse_toml)
 }
 
@@ -260,11 +296,16 @@ main() {
         install_all
     else
         for name in "${components[@]}"; do
-            install_dotfile "$name"
+            install_dotfile "$name" || FAILED+=("$name")
         done
     fi
 
     echo ""
+    if [[ ${#FAILED[@]} -gt 0 ]]; then
+        log_error "Failed (${#FAILED[@]}): ${FAILED[*]}"
+        log_warn "All other dotfiles were installed successfully."
+        exit 1
+    fi
     log_success "Installation complete!"
 }
 
