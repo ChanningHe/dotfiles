@@ -1,4 +1,8 @@
 {
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "permissions": {
     "allow": [
       "WebSearch",
@@ -11,6 +15,7 @@
       "Bash(curl:*)",
       "Bash(rustc:*)",
       "Bash(docker run:*)",
+      "Bash(nix run nixpkgs#kubectl:*)",
       "Bash(nix:*)",
       "Bash(go:*)",
       "Bash(python:*)",
@@ -30,10 +35,6 @@
     "defaultMode": "auto"
   },
   "model": "opus",
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  },
   "hooks": {
     "PreToolUse": [
       {
@@ -70,10 +71,16 @@
     }
   },
   "effortLevel": "high",
+  "modelSettings": {
+    "claude-sonnet-5-5": {
+      "effortLevel": "high"
+    }
+  },
   "companyAnnouncements": [
     "Welcome!"
   ],
   "tui": "fullscreen",
+  "wheelScrollAccelerationEnabled": false,
   "skipWorkflowUsageWarning": true,
   "theme": "light",
   "agentPushNotifEnabled": true,
