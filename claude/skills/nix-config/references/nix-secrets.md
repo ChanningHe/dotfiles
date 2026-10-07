@@ -179,7 +179,7 @@ Adding a host's anchor requires the host to be reachable for `ssh-keyscan`, whic
 
 ## secrets/ inventory
 
-Files in `/Volumes/Codes/nix-src/nix-secrets/secrets/`: `shared.yaml`, `Annulatus.yaml`, `ChanningdeMacBook-Pro.yaml`, `Macrouridae.yaml`, `Mola.yaml`, `nixos-rl.yaml`, `Platypus.yaml`, `Poecilia.yaml`, `Pseudomugil.yaml`, `Toxotidae.yaml`.
+Files in `${PWD}/nix-src/nix-secrets/secrets/`: `shared.yaml`, `Annulatus.yaml`, `ChanningdeMacBook-Pro.yaml`, `Deissneri.yaml`, `Macrouridae.yaml`, `Mola.yaml`, `Platypus.yaml`, `Poecilia.yaml`, `Pseudomugil.yaml`, `Toxotidae.yaml`.
 
 Known secret paths (the strings passed to `sops.secrets."..."`):
 
@@ -249,4 +249,3 @@ When a recipe needs a new secret, do the nix-side work and hand off the rest:
 1. Add the `sops.secrets."<path>"` block to the module with the correct `sopsFile`.
 2. Reference `config.sops.secrets."<path>".path` (or a `sops.templates` entry) where consumed.
 3. Tell the user the exact YAML key path and which file to add it to (`shared.yaml` vs `<HostName>.yaml`), then wait for confirmation before rebuilding.
-

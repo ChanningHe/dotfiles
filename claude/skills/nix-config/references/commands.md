@@ -57,6 +57,7 @@ Common `spawn` arguments:
 | Command | What it does |
 | --- | --- |
 | `just deploy <name> [extra]` | `nix run .#deploy -- .#<name> [extra]`. Uses deploy-rs from `flake.nix` outputs; provides auto-rollback if activation fails. This is the standard way to **update** an already-installed host. |
+| `just deploy-all [extra]` | Runs `rebuild-pre` (refresh nix-secrets lock), then `nix run .#deploy -- . [extra]`: every node in `deploy.nodes` (all NixOS hosts except `iso`). Remote builds run in parallel per host, activations run sequentially; if any host fails, already-activated hosts are rolled back (`--rollback-succeeded false` to disable). Try `--dry-activate` first. |
 | `just sync <USER> <HOST> <PATH>` | `rsync -av --filter=':- .gitignore' -e "ssh -l <USER> -oport=22" . <USER>@<HOST>:<PATH>/nix-config`. Mirrors the working tree (not just committed files) to a remote, respecting `.gitignore`. |
 | `just build-host <host>` | `nixos-rebuild --target-host <host> --use-remote-sudo --show-trace --impure --flake .#<host> switch`. Direct remote rebuild without deploy-rs; no rollback safety net. |
 

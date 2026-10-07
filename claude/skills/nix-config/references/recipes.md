@@ -235,7 +235,7 @@ Edit `home/<user>/<host>.nix`. Live example from `home/channinghe/Poecilia.nix`:
 home.sessionVariables = {
   DOCKER_DATA = "/mnt/rpool/ConfigData/DockerConfig/DOCKER_DATA";
 };
-sshClients.enabledHosts = [ "Pseudomugil" "nixos-rl" ];
+sshClients.enabledHosts = [ "Pseudomugil" ];
 ```
 
 `common/core` is what the user expects everywhere; `common/optional/` is the feature menu; the `<host>.nix` file is the per-host order ticket. Each layer reads as a tighter scope, so drift is visible in diffs.

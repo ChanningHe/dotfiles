@@ -5,7 +5,7 @@ description: Extends and operates the user's NixOS + Darwin monorepo at /Volumes
 
 # nix-config
 
-Operating manual for `/Volumes/Codes/nix-src/nix-config` (public logic) and `/Volumes/Codes/nix-src/nix-secrets` (private data, separate flake input). The repo manages 8 NixOS hosts plus 1 Darwin host through a unified flake. This skill encodes the conventions so a new session can add or modify a module without re-reading the whole tree.
+Operating manual for `${PWD}/nix-src/nix-config` (public logic) and `${PWD}/nix-src/nix-secrets` (private data, separate flake input). The repo manages 7 NixOS hosts (plus the `iso` installer) and 1 Darwin host through a unified flake. This skill encodes the conventions so a new session can add or modify a module without re-reading the whole tree.
 
 Primary use case: adding or extending home / host modules. The decision tree below routes you to the right pattern; everything else (hosts, packages, overlays, secrets) is built around the same data bus.
 
@@ -171,6 +171,7 @@ just update                # nix flake update
 just spawn <Name> -d <ip> --disk-layout <ext4|zfs|btrfs|zfs-mirror>
                            # full state-driven NixOS install via nixos-anywhere
 just deploy <Name>         # remote update via deploy-rs (auto-rollback)
+just deploy-all            # deploy every NixOS host via deploy-rs (batch rollback on failure)
 nix develop                # enter shell with sops, age, ssh-to-age, just, gum
 ```
 
@@ -183,4 +184,3 @@ Read these on demand. Each is self-contained; do not chain reads. Section pointe
 - `references/hostspec.md` — complete `hostSpec` option enumeration with types, defaults, and which file populates which field. Read when wiring a new module that reads `config.hostSpec.<something>` or when an assertion in `modules/common/host-spec.nix` fires.
 - `references/nix-secrets.md` — `nix-secrets` schemas (`networkInfo`, `serviceInfo`, `networkStorageInfo`, `sshClientsInfo`, `personal`), the `.sops.yaml` structure, known secret paths, and the consumption patterns. Reference-only — the user edits these files and runs `sops`. Read when you need to tell the user what YAML key to add or which file to put it in.
 - `references/commands.md` — full `justfile` catalog, `nix-config/scripts/rebuild.sh` argument forms, `nix-config/scripts/spawn.sh` state machine (`UNREACHABLE`, `NON_NIXOS`, `INSTALLER`, `INSTALLED_THIS`, `INSTALLED_OTHER`) and resumable `--from`/`--only` flags, deploy-rs targets. Read when running or composing commands.
-
