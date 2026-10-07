@@ -72,6 +72,7 @@ if _flyline_load; then
   # Right arrow accepts the highlighted tab-completion entry (like Enter)
   flyline key bind Right tabCompletionEntrySelected=tabCompletionAcceptEntry
   flyline suggestions --auto-suggest
+  flyline editor --auto-close-chars false
 else
   # Basic fallback: plain prompt (16-color ANSI only), user@host over SSH
   PS1='\[\e[1;34m\]\w\[\e[0m\]\n\[\e[1;32m\]>\[\e[0m\] '
