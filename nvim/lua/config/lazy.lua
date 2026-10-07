@@ -21,7 +21,7 @@ require("lazy").setup({
 
     -- LSP handled by lazy-lsp.nvim (Nix-based auto-discovery), see lua/plugins/lsp.lua
     -- lang extras removed to avoid double LSP client conflicts
-    { import = "lazyvim.plugins.extras.ai.copilot" },
+    --{ import = "lazyvim.plugins.extras.ai.copilot" },
     -- Custom plugins
     { import = "plugins" },
   },
