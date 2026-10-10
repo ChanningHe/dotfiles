@@ -56,3 +56,5 @@ cursor-click-to-move = false
 macos-option-as-alt = true
 # for macos
 window-colorspace = display-p3
+# CRT Shader with Chromatic Aberration, Glow, Scanlines, and Dot Matrix
+custom-shader = ~/.config/dotfiles/ghostty/srt-shader.glsl
