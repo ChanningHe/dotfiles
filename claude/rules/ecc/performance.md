@@ -2,20 +2,17 @@
 
 ## Model Selection Strategy
 
-**Haiku** (90% of Sonnet capability, 3x cost savings):
-- Lightweight agents with frequent invocation
-- Pair programming and code generation
-- Worker agents in multi-agent systems
+Subagents use only `opus` or `sonnet`, chosen by task difficulty (see [dev-workflow.md](../dev-workflow.md)):
 
-**Sonnet** (Best coding model):
-- Main development work
-- Orchestrating multi-agent workflows
-- Complex coding tasks
+**Sonnet** (well-scoped work):
+- Implementation with a clear plan
+- Routine code review
+- Batched small tasks
 
-**Opus** (Deepest reasoning):
-- Complex architectural decisions
-- Maximum reasoning requirements
-- Research and analysis tasks
+**Opus** (deepest reasoning):
+- Architecture and design decisions
+- Complex, ambiguous, or cross-cutting tasks
+- Research, analysis, and security-sensitive review
 
 ## Context Window Management
 
