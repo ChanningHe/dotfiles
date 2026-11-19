@@ -1,7 +1,7 @@
 ---
 name: coder
 description: Implements ONE bounded slice from a brief file. Delegate - multi-file or mechanical changes with an approved brief, independent per-area lanes. Don't - discovery or design decisions (architect), bug hunts (debugger), a < 20-line change the caller can make inline, prose built from context the caller holds.
-model: sonnet
+model: opus
 effort: high
 maxTurns: 150
 disallowedTools: Agent

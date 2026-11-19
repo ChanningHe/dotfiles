@@ -1,7 +1,7 @@
 ---
 name: researcher
 description: Read-only recon and research. Delegate - broad codebase search across many files, unfamiliar library/API/docs lookups, web research, collecting facts for a decision. Don't - design (architect), reviews (reviewer), edits, a lookup one grep answers. Caller may pass model sonnet for deep research.
-model: haiku
+model: sonnet
 effort: low
 maxTurns: 40
 omitClaudeMd: true

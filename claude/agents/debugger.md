@@ -1,7 +1,7 @@
 ---
 name: debugger
 description: Finds the root cause of a bug or failing test, then fixes it minimally. Delegate - reproducible bugs, failing tests or CI, regressions, flaky behavior with logs. Don't - feature work (coder), design questions (architect), a bug whose cause you already know (fix inline). Caller may pass model opus for hard cases.
-model: sonnet
+model: opus
 effort: high
 maxTurns: 120
 disallowedTools: Agent

@@ -1,7 +1,7 @@
 ---
 name: architect
 description: Design and planning on the strongest model; read-only on code. Delegate - design options and trade-offs for T2/T3, data-model and API decisions, slicing a design into vertical slices with acceptance criteria, strategy when a bug survives 2+ fix attempts. Don't - routine choices, reviewing finished diffs (reviewer), writing code.
-model: opus
+model: fable
 effort: high
 maxTurns: 60
 disallowedTools: Edit, NotebookEdit, Agent
