@@ -1,7 +1,13 @@
 # Design: <title>
+<!-- Language: write the body in Chinese. Keep headings, fixed keys, code, commands, paths and identifiers in English; quote the user in their original words. -->
+
+Base: <commit at kickoff; the item's diff is `git diff <Base>`>
 
 ## Problem
 <!-- User's words, verbatim, quoted. -->
+
+## Unknowns
+<!-- Facts the design depends on that are not yet verified. Each ends as: answer + evidence (file:line / URL), or "open". -->
 
 ## Rulings
 <!-- One per line: "Ruling: what — why — cost if wrong". -->

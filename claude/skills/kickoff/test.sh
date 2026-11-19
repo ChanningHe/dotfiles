@@ -16,7 +16,7 @@ newrepo() {
   local r; r=$(mktemp -d "$TMP/repo.XXXXXX")
   git -C "$r" init -q
   git -C "$r" -c user.name=t -c user.email=t@t commit -q --allow-empty -m init
-  echo "$r"
+  (cd "$r" && pwd -P)
 }
 TODAY=$(date +%y%m%d)
 
@@ -31,25 +31,26 @@ R=$(newrepo); mkdir -p "$R/sub/dir"
 before=$(git -C "$R" status --porcelain)
 stdout=$(cd "$R/sub/dir" && bash "$INIT" my-item 2>"$TMP/err"); rc=$?
 [ "$rc" -eq 0 ] && ok || bad "T2 happy: exit $rc"
-[ "$stdout" = "$R/.work/$TODAY-my-item" ] && ok || bad "T2 happy: stdout was '$stdout'"
+[ "$stdout" = "$R/.shoal-dev/$TODAY-my-item" ] && ok || bad "T2 happy: stdout was '$stdout'"
 [ "$(printf '%s\n' "$stdout" | wc -l)" -eq 1 ] && ok || bad "T2 happy: stdout must be one line"
 [ ! -s "$TMP/err" ] && ok || bad "T2 happy: unexpected stderr: $(cat "$TMP/err")"
-check ".work/.gitignore contains *" grep -qx '\*' "$R/.work/.gitignore"
-check "INDEX ignored" git -C "$R" check-ignore -q .work/INDEX.md
-check "design.md exists" test -s "$R/.work/$TODAY-my-item/design.md"
-check "no ledger for T2" test ! -e "$R/.work/$TODAY-my-item/ledger.md"
+check ".shoal-dev/.gitignore contains *" grep -qx '\*' "$R/.shoal-dev/.gitignore"
+check "INDEX ignored" git -C "$R" check-ignore -q .shoal-dev/INDEX.md
+check "design.md exists" test -s "$R/.shoal-dev/$TODAY-my-item/design.md"
+check "design.md records base commit" grep -qx "Base: $(git -C "$R" rev-parse HEAD)" "$R/.shoal-dev/$TODAY-my-item/design.md"
+check "no ledger for T2" test ! -e "$R/.shoal-dev/$TODAY-my-item/ledger.md"
 for h in "Active" "Learnings" "Out of scope"; do
-  check "INDEX has $h" grep -q "^## $h" "$R/.work/INDEX.md"
+  check "INDEX has $h" grep -q "^## $h" "$R/.shoal-dev/INDEX.md"
 done
-check "INDEX has table header" grep -q '^| id | tier | status | next |' "$R/.work/INDEX.md"
+check "INDEX has table header" grep -q '^| id | tier | status | next |' "$R/.shoal-dev/INDEX.md"
 [ "$(git -C "$R" status --porcelain)" = "$before" ] && ok || bad "git status changed"
 
 # 3. T3 creates ledger; INDEX not overwritten
-echo "SENTINEL" >> "$R/.work/INDEX.md"
+echo "SENTINEL" >> "$R/.shoal-dev/INDEX.md"
 stdout=$(cd "$R" && bash "$INIT" big-one T3 2>/dev/null); rc=$?
 [ "$rc" -eq 0 ] && ok || bad "T3: exit $rc"
-check "ledger.md exists for T3" test -s "$R/.work/$TODAY-big-one/ledger.md"
-check "INDEX preserved" grep -q SENTINEL "$R/.work/INDEX.md"
+check "ledger.md exists for T3" test -s "$R/.shoal-dev/$TODAY-big-one/ledger.md"
+check "INDEX preserved" grep -q SENTINEL "$R/.shoal-dev/INDEX.md"
 [ "$(git -C "$R" status --porcelain)" = "$before" ] && ok || bad "git status changed (T3)"
 
 # 4. refusals
@@ -66,10 +67,10 @@ refuse "bad slug empty" "$R" ""
 refuse "bad slug traversal" "$R" ../x
 refuse "bad tier" "$R" okslug T9
 refuse "no args" "$R"
-R2=$(newrepo); mkdir "$R2/.work"; echo x > "$R2/.work/tracked.md"
-git -C "$R2" add -f .work/tracked.md
-refuse "tracked .work" "$R2" thing
-[ ! -e "$R2/.work/.gitignore" ] && ok || bad "tracked .work: must not create files"
+R2=$(newrepo); mkdir "$R2/.shoal-dev"; echo x > "$R2/.shoal-dev/tracked.md"
+git -C "$R2" add -f .shoal-dev/tracked.md
+refuse "tracked .shoal-dev" "$R2" thing
+[ ! -e "$R2/.shoal-dev/.gitignore" ] && ok || bad "tracked .shoal-dev: must not create files"
 
 # 5. legacy notice, nothing moved
 R3=$(newrepo); mkdir -p "$R3/dev/docs" "$R3/dev/tasks"; echo a > "$R3/dev/docs/a.md"

@@ -1,10 +1,10 @@
 {
+  "env": {
+    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet"
+  },
   "attribution": {
     "commit": "",
     "pr": ""
-  },
-  "env": {
-    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet"
   },
   "permissions": {
     "allow": [
@@ -41,7 +41,7 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "tool == \"Bash\" && tool_input.command matches \"git commit\"",
+        "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
@@ -56,6 +56,17 @@
             "type": "command",
             "command": "f=\"$HOME/.ccs/hooks/websearch-transformer.cjs\"; [ -f \"$f\" ] || exit 0; exec node \"$f\"",
             "timeout": 85
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/quality-gate/gate.sh\"",
+            "timeout": 30
           }
         ]
       }
@@ -85,16 +96,7 @@
     ]
   },
   "enabledPlugins": {
-    "gopls-lsp@claude-plugins-official": true,
-    "ecc@ecc": false
-  },
-  "extraKnownMarketplaces": {
-    "ecc": {
-      "source": {
-        "source": "github",
-        "repo": "affaan-m/everything-claude-code"
-      }
-    }
+    "gopls-lsp@claude-plugins-official": true
   },
   "effortLevel": "high",
   "modelSettings": {
@@ -141,5 +143,6 @@
       "**Trusted repo**: The git repository at /home/channinghe/dev/rustdesk-admin (its working directory); no remotes are currently configured",
       "**Org-specific CLIs**: None configured"
     ]
-  }
+  },
+  "model": "fable"
 }

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Stop / SubagentStop quality gate: run <repo>/.claude/check, block (exit 2) when it fails.
+# UserPromptSubmit only records the tree the turn started from; a turn that leaves it untouched is not gated.
 # Fail-open on any internal problem. Never writes to stdout, never modifies the repo.
 
 MAX_BLOCKS=3
@@ -45,7 +46,6 @@ CHECK="$REPO/.claude/check"
 cd "$REPO" || exit 0
 
 # --- 3: working-tree state ---
-[ -n "$(git status --porcelain 2>/dev/null)" ] || exit 0
 state_of_tree() {
   git diff HEAD --no-ext-diff --no-textconv 2>/dev/null || { git diff --cached; git diff; }
   git ls-files -z --others --exclude-standard | while IFS= read -r -d '' f; do
@@ -53,13 +53,22 @@ state_of_tree() {
     git hash-object -- "$f" 2>/dev/null
   done
 }
+SAFE_SID="$(printf '%s' "${SESSION_ID:-nosession}" | tr -c 'A-Za-z0-9_-' '_')"
+COUNTER_FILE="$RUN_DIR/$SAFE_SID"
+BASE_FILE="$RUN_DIR/$SAFE_SID.base"
+
+if [ "$EVENT" = "UserPromptSubmit" ]; then
+  mkdir -p "$RUN_DIR" 2>/dev/null && state_of_tree | sha1 >"$BASE_FILE" 2>/dev/null
+  exit 0
+fi
+[ -n "$(git status --porcelain 2>/dev/null)" ] || exit 0
 STATE="$(state_of_tree | sha1)"
+# Tree untouched since the prompt: any failure predates this turn and is not its job to fix.
+if [ -f "$BASE_FILE" ] && [ "$(cat "$BASE_FILE" 2>/dev/null)" = "$STATE" ]; then exit 0; fi
 
 # --- 4: skip when this exact state already passed ---
 REPO_KEY="$(printf '%s' "$REPO" | sha1)"
 STATE_FILE="$STATE_DIR/$REPO_KEY"
-SAFE_SID="$(printf '%s' "${SESSION_ID:-nosession}" | tr -c 'A-Za-z0-9_-' '_')"
-COUNTER_FILE="$RUN_DIR/$SAFE_SID"
 reset_counter() { rm -f "$COUNTER_FILE" 2>/dev/null; }
 
 if [ -f "$STATE_FILE" ] && [ "$(cat "$STATE_FILE" 2>/dev/null)" = "$STATE" ]; then

@@ -1,6 +1,8 @@
 # Brief sN: <title>
+<!-- Language: write the body in Chinese. Keep headings, fixed keys, code, commands, paths and identifiers in English; quote the user in their original words. -->
 
 Design (read first): <absolute path to design.md>
+Base: <the Base commit from design.md; the item's diff is `git diff <Base>`>
 Report path: <absolute path to sN.report.md>
 Report shape: <absolute path to the report template>
 

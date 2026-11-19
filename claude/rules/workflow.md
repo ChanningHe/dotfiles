@@ -10,8 +10,8 @@ Pick the lightest workflow that fits.
 |---|---|---|
 | T0 | 1 file, ≤ ~20 lines | Do it inline. No plan, no review, no records. |
 | T1 | 1–3 files, one behavior | Do it inline. Bug fix: failing test first. |
-| T2 | several files or a real design choice | `/kickoff` → `design.md` ≤ 1 page ending with how it will be verified → **user approves** → implement inline, or `delegate` one slice per independent area. |
-| T3 | multiple subsystems or sessions | `/kickoff` (T3) → `researcher` → `architect` design ≤ ~200 lines (**user approves**) → `delegate` vertical slices (sequential unless in separate worktrees) → `tester` against the acceptance criteria → `reviewer` final review. Main thread orchestrates only. |
+| T2 | several files or a real design choice | Invoke `kickoff` yourself → verify the unknowns → `design.md` ≤ 1 page ending with how it will be verified → **user approves** → implement inline, or `delegate` one slice per independent area. |
+| T3 | multiple subsystems or sessions | Invoke `kickoff` (T3) yourself → verify the unknowns (`researcher` for broad ones) → main thread drafts the design ≤ ~200 lines → `architect` challenges the draft → **user approves** → `delegate` vertical slices (sequential unless in separate worktrees) → `tester` against the acceptance criteria → `reviewer` final review. After approval the main thread orchestrates only. |
 
 Escalation list: auth, crypto, secrets, payments, data migrations, concurrency, public APIs, parsing untrusted input. Such changes are at least T2 and get a `reviewer` pass with model `opus`.
 
@@ -20,7 +20,7 @@ Escalation list: auth, crypto, secrets, payments, data migrations, concurrency, 
 | Agent | Model | Delegate | Don't |
 |---|---|---|---|
 | `researcher` | haiku (pass `sonnet` for deep research) | codebase recon, library/docs/web lookups, fact collection | decisions, reviews, a lookup one grep answers |
-| `architect` | opus | design trade-offs, data model/API decisions, slicing into briefs | routine choices, code |
+| `architect` | opus | challenging a draft design, data model/API trade-offs, slicing into briefs | routine choices, code |
 | `coder` | sonnet | one bounded slice with a brief; independent per-area lanes | design decisions, bug hunts, a < 20-line change |
 | `debugger` | sonnet (pass `opus` for hard cases) | reproduce → root cause → regression test → minimal fix | feature work, bugs whose cause you already know |
 | `tester` | sonnet | acceptance criteria → tests, E2E runs, independent evidence | fixing product code |
@@ -33,7 +33,7 @@ Language expertise lives in the model, not in per-language agents. Docs, summari
 - Delegate by context held, not only by size: a fresh agent starts cold.
 - Dispatch by brief path, never by pasted history; quote the user's own words verbatim in the brief.
 - Reports are claims, not evidence: spot-check one artifact before accepting. Fixes go back to the same agent; after two misses change the slice or the agent.
-- Parallelize only slices with disjoint files; never review in parallel with the edits under review.
+- Parallelize only slices with disjoint files, each in its own worktree; never review in parallel with the edits under review.
 
 ## Verification
 
@@ -42,10 +42,11 @@ Language expertise lives in the model, not in per-language agents. Docs, summari
 
 ## Records and sessions
 
-- Work records live in `.work/` at the repo root (`INDEX.md`, one `<YYMMDD-slug>/` per T2/T3 item, `learnings/`, `archive/`). `.work/.gitignore` contains `*`; never commit `.work/`.
+- Work records live in `.shoal-dev/` at the repo root (`INDEX.md`, one `<YYMMDD-slug>/` per T2/T3 item, `learnings/`, `archive/`). `.shoal-dev/.gitignore` contains `*`; never commit `.shoal-dev/`.
+- Everything under `.shoal-dev/` is written in Chinese, by the main thread and by subagents alike. Section headings, fixed keys (`Base:`, `Ruling:`), code, commands, paths and identifiers stay in English; the user's words are quoted as written. Code and code comments stay in English.
 - One milestone per session: `/checkpoint` rewrites the ledger in place and tells the user when to start a new session; `/pickup` resumes; `/finish` closes an item (learnings bar, tombstone, prune).
-- Legacy `dev/docs` / `dev/tasks`: offer to migrate into `.work/` when you touch that project; never move without asking.
+- Legacy `dev/docs` / `dev/tasks`: offer to migrate into `.shoal-dev/` when you touch that project; never move without asking.
 
 ## Git
 
-- Conventional commits (`feat|fix|refactor|docs|test|chore|perf|ci: …`), enforced by hook. Commit or push only when the user asks.
+- Conventional commits (`feat|fix|refactor|docs|style|test|chore|build|perf|ci: …`, subject ≤ 50 chars, no trailing period), enforced by hook. Commit or push only when the user asks.

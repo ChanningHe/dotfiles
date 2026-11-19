@@ -135,6 +135,21 @@ raw_gate "$(ev_json Stop '[]')"; eq "Stop + empty background_tasks: blocks" 2 "$
 raw_gate "$(ev_json Stop '')";   eq "Stop + absent background_tasks: blocks" 2 "$RC"
 eq "Stop + no background tasks: check ran twice" 2 "$(runs)"
 
+# 12c. turn baseline: UserPromptSubmit records the tree; a Stop on the same tree is not gated
+new_case; set_check 'exit 1'; commit_all; dirty
+raw_gate "$(ev_json UserPromptSubmit '')"
+eq "UserPromptSubmit: exit 0" 0 "$RC"; eq "UserPromptSubmit: silent stdout" "" "$OUT"
+eq "UserPromptSubmit: check not run" 0 "$(runs)"
+raw_gate "$(ev_json Stop '')"
+eq "Stop on untouched tree: exit 0" 0 "$RC"; eq "Stop on untouched tree: check not run" 0 "$(runs)"
+dirty; raw_gate "$(ev_json Stop '')"
+eq "Stop after this turn's edit: blocks" 2 "$RC"; eq "Stop after this turn's edit: check ran" 1 "$(runs)"
+raw_gate "$(ev_json UserPromptSubmit '')"; raw_gate "$(ev_json Stop '')"
+eq "next turn, still broken but untouched: exit 0" 0 "$RC"
+new_case; set_check 'exit 1'; commit_all
+raw_gate "$(ev_json UserPromptSubmit '')"; dirty; raw_gate "$(ev_json Stop '')"
+eq "baseline on clean tree, then edit: blocks" 2 "$RC"
+
 # 13. python3 fallback when jq is absent; neither -> warn + exit 0
 BIN="$ROOT/bin"; mkdir -p "$BIN"
 for c in bash env git sha1sum shasum timeout cat tail head mkdir date sed tr rm mktemp dirname basename wc sort xargs grep cut mv sleep seq pwd printf uname; do

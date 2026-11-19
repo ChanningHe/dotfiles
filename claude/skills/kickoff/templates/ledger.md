@@ -1,4 +1,5 @@
 # Ledger: <id>
+<!-- Language: write the body in Chinese. Keep headings, fixed keys, code, commands, paths and identifiers in English; quote the user in their original words. -->
 
 ## Status
 <!-- One line. Rewrite in place; never append a log. -->

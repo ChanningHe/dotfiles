@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Usage: init.sh <slug> [T2|T3]
-# Creates .work/<YYMMDD>-<slug>/ in the current git repo. Prints the item path on stdout.
+# Creates .shoal-dev/<YYMMDD>-<slug>/ in the current git repo. Prints the item path on stdout.
+# design.md records the HEAD commit as "Base:" so the item's diff is `git diff <Base>`.
 set -euo pipefail
 
 die() { echo "kickoff: $*" >&2; exit 1; }
@@ -13,9 +14,9 @@ TEMPLATES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/templates"
 [[ "$TIER" == T2 || "$TIER" == T3 ]] || die "tier must be T2 or T3 (got '$TIER')"
 
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null) || die "not inside a git work tree"
-WORK="$ROOT/.work"
+WORK="$ROOT/.shoal-dev"
 
-[[ -z "$(git -C "$ROOT" ls-files .work)" ]] || die ".work/ has tracked files; untrack them first (git rm -r --cached .work)"
+[[ -z "$(git -C "$ROOT" ls-files .shoal-dev)" ]] || die ".shoal-dev/ has tracked files; untrack them first (git rm -r --cached .shoal-dev)"
 
 shopt -s nullglob
 existing=("$WORK"/[0-9][0-9][0-9][0-9][0-9][0-9]-"$SLUG")
@@ -24,7 +25,7 @@ shopt -u nullglob
 
 mkdir -p "$WORK"
 [[ -f "$WORK/.gitignore" ]] || printf '*\n' > "$WORK/.gitignore"
-git -C "$ROOT" check-ignore -q .work/INDEX.md || die ".work/ is not git-ignored; check $WORK/.gitignore"
+git -C "$ROOT" check-ignore -q .shoal-dev/INDEX.md || die ".shoal-dev/ is not git-ignored; check $WORK/.gitignore"
 
 if [[ ! -f "$WORK/INDEX.md" ]]; then
   cat > "$WORK/INDEX.md" <<'IDX'
@@ -43,11 +44,12 @@ fi
 
 ITEM="$WORK/$(date +%y%m%d)-$SLUG"
 mkdir "$ITEM"
-cp "$TEMPLATES/design.md" "$ITEM/design.md"
+BASE=$(git -C "$ROOT" rev-parse --verify -q HEAD || echo none)
+sed "s/^Base: .*/Base: $BASE/" "$TEMPLATES/design.md" > "$ITEM/design.md"
 [[ "$TIER" == T3 ]] && cp "$TEMPLATES/ledger.md" "$ITEM/ledger.md"
 
 if [[ -d "$ROOT/dev/docs" || -d "$ROOT/dev/tasks" ]]; then
-  echo "kickoff: legacy dev/docs or dev/tasks found; nothing moved (offer migration to .work/legacy/)" >&2
+  echo "kickoff: legacy dev/docs or dev/tasks found; nothing moved (offer migration to .shoal-dev/legacy/)" >&2
 fi
 
 echo "$ITEM"

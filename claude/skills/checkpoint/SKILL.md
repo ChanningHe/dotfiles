@@ -7,8 +7,8 @@ description: Use at a milestone, before a long pause, or when context is getting
 
 Rewrite the item's state so a fresh session can continue from it. The ledger is a state file, never a log.
 
-1. Find the item: `.work/INDEX.md` Active table, or the item the conversation is about. If several are active and it is unclear which, ask.
-2. Rewrite `.work/<id>/ledger.md` in place, at most 40 lines, with exactly these sections:
+1. Find the item: `.shoal-dev/INDEX.md` Active table, or the item the conversation is about. If several are active and it is unclear which, ask.
+2. Rewrite `.shoal-dev/<id>/ledger.md` in place, at most 40 lines, with exactly these sections:
    - Status: one line.
    - Next: the single next action.
    - Decisions: settled choices not obvious from code/git.
@@ -16,7 +16,7 @@ Rewrite the item's state so a fresh session can continue from it. The ledger is 
    - Open issues: ranked by severity, highest first.
    - References: paths only (design.md, briefs, reports, research notes).
    Drop stale content. Do not append history; do not copy report bodies.
-3. Update the item's row in `.work/INDEX.md` (status and next). Keep INDEX at most 30 lines.
+3. Update the item's row in `.shoal-dev/INDEX.md` (status and next). Keep INDEX at most 30 lines.
 4. Verify before claiming: `git log --oneline -5` and `git status --short` agree with Status; fix the ledger if not.
 5. Say in one line whether this is a good point for a new session: yes when no lane is running and Next is self-contained in the ledger; no otherwise, and name what must finish first.
 
