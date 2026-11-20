@@ -18,9 +18,10 @@ One slice = one brief file = one agent = one report file. Dispatch passes paths 
    `reviewer` cannot write files: its final message is the report; save it to `ITEM/sN.report.md` yourself. Its diff is `git diff <Base>`, with `Base` from `design.md`.
 5. On return, read `ITEM/sN.report.md`. Reports are claims. Spot-check one artifact: rerun `.claude/check` if it exists, or read the key hunk of the diff. Compare it with the report.
 6. If the check disagrees or an acceptance criterion is missed, send the fix request to the same agent with SendMessage (cite the criterion). After two misses on the same slice, change the slice boundary or the agent; do not retry a third time unchanged.
-7. If `ITEM/ledger.md` exists, update the lane's row (state, report path, open issues). Rewrite in place.
+7. Slice accepted: commit it yourself. One conventional commit on the current branch, staging only the paths the slice touched (never `git add -A`). If a file had uncommitted changes before the item started, ask first. A worktree lane is integrated into the main tree before its commit.
+8. If `ITEM/ledger.md` exists, update the lane's row (state, report path, open issues). Rewrite in place.
 
 Parallelism: sequential by default. Run slices in parallel only when their files in scope are disjoint and each runs in its own worktree (`isolation: "worktree"`): the quality gate checks the whole tree, so a half-done sibling lane fails yours. Never run a review in parallel with the edits under review.
-Never commit or push through a subagent. The main thread integrates and reports.
+Never commit or push through a subagent. The main thread integrates, commits and reports; it never pushes unasked.
 
 Templates: `${CLAUDE_SKILL_DIR}/templates/brief.md`, `${CLAUDE_SKILL_DIR}/templates/report.md` (the agent writes the report in this shape).

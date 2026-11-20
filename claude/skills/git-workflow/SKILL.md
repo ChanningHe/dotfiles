@@ -11,11 +11,9 @@ Follow Conventional Commits strictly:
 
 ```
 <type>(<scope>): <subject>
-
-<body>
-
-<footer>
 ```
+
+Subject line only: no body, no footer. Include a scope whenever one fits; it is preferred, not required.
 
 **Types**:
 - `feat`: New feature
@@ -32,20 +30,8 @@ Follow Conventional Commits strictly:
 **Examples**:
 ```
 feat(auth): add OAuth2 login flow
-
-Implements authorization code flow with PKCE.
-Supports Google and GitHub providers.
-
-Closes #123
-```
-
-```
 fix(payment): handle Stripe webhook retries
-
-Previous implementation didn't handle duplicate
-webhook events, causing duplicate charge attempts.
-
-Fixes #456
+chore(nix): bump flake inputs
 ```
 
 ## Commit Rules
@@ -53,8 +39,8 @@ Fixes #456
 1. **Subject line max 50 chars**
 2. **Imperative mood**: "Add feature" not "Added feature" or "Adds feature"
 3. **No period at end of subject**
-4. **Body explains WHY**, not WHAT (code shows what)
-5. **Reference issues**: Use `Closes #123` or `Refs #456`
+4. **No body or footer**: the subject says what changed; the why belongs in the PR or the code
+5. **Scope preferred**: `fix(auth): …` over `fix: …` when a scope fits
 
 ## Enforcement (auto-blocked)
 
@@ -65,12 +51,12 @@ wait to be rejected.
 
 The hook enforces, on the subject line only:
 
-- Pattern `type(scope): description`; **scope is optional** (`feat: ...` is valid)
+- Pattern `type(scope): description`; scope is preferred but **not enforced** (`feat: ...` passes)
 - `type` must be one of: `feat fix refactor chore docs style test build ci perf`
 - Subject length **≤ 50 chars**
 - **No trailing period**
 
-Body/footer are not checked by the hook — follow the guidance above for those.
+The hook does not check for a body; leaving it out is on you.
 Before committing, mentally check the subject against these four rules.
 
 ## Branch Strategy
