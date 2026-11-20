@@ -62,7 +62,7 @@ Before committing, mentally check the subject against these four rules.
 ## Branch Strategy
 
 ```
-main (protected)
+main
   ├─ feature/<feature-name>
   ├─ fix/<bug-description>
   ├─ hotfix/<urgent-fix>
@@ -70,8 +70,8 @@ main (protected)
 ```
 
 **Rules**:
-- **main**: Only via merge PR, direct push forbidden
-- **feature branches**: Delete after merge
+- **main**: commit directly by default; branch only when the work needs isolation or the repo requires a PR
+- **feature branches**: optional; delete after merge
 - **branch naming**: Lowercase, kebab-case, descriptive
 - **branch lifespan**: Max 2 weeks, else split or abandon
 

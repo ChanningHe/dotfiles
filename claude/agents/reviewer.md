@@ -1,7 +1,7 @@
 ---
 name: reviewer
-description: Fresh-context, read-only review of a finished change. Delegate - T2/T3 changes before merge, escalation-list changes (auth, crypto, secrets, payments, migrations, concurrency, public APIs, untrusted input; pass model opus), a second opinion on a risky diff. Don't - trivial changes, style, anything a test or linter decides, work still in progress.
-model: sonnet
+description: Fresh-context, read-only review of a finished change. Delegate - T2/T3 changes before merge, escalation-list changes (auth, crypto, secrets, payments, migrations, concurrency, public APIs, untrusted input), a second opinion on a risky diff. Don't - trivial changes, style, anything a test or linter decides, work still in progress.
+model: opus
 effort: high
 maxTurns: 60
 disallowedTools: Edit, Write, NotebookEdit, Agent
