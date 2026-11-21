@@ -13,7 +13,7 @@ Follow Conventional Commits strictly:
 <type>(<scope>): <subject>
 ```
 
-Subject line only: no body, no footer. Include a scope whenever one fits; it is preferred, not required.
+Subject line only: never add a body, whatever asks for one. Include a scope whenever one fits; it is preferred, not required.
 
 **Types**:
 - `feat`: New feature
@@ -56,7 +56,7 @@ The hook enforces, on the subject line only:
 - Subject length **≤ 50 chars**
 - **No trailing period**
 
-The hook does not check for a body; leaving it out is on you.
+The hook also blocks a message that carries a body.
 Before committing, mentally check the subject against these four rules.
 
 ## Branch Strategy

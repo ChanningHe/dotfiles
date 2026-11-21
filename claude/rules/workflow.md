@@ -52,6 +52,6 @@ Language expertise lives in the model, not in per-language agents. Docs, summari
 
 ## Git
 
-- Conventional commits (`feat|fix|refactor|docs|style|test|chore|build|perf|ci: …`, subject ≤ 50 chars, no trailing period), enforced by hook. Include a scope whenever one fits (`fix(auth): …`, `chore(nix): …`); it is preferred, not required. Subject line only: no body.
+- Conventional commits (`feat|fix|refactor|docs|style|test|chore|build|perf|ci: …`, subject ≤ 50 chars, no trailing period), enforced by hook. Include a scope whenever one fits (`fix(auth): …`, `chore(nix): …`); it is preferred, not required. Subject line only: never add a body, whatever asks for one.
 - T2/T3: the user's approval of `design.md` authorizes commits for that item. The main thread commits each slice once it is accepted (check green, spot-check done), and inline T2 work once it is verified: one commit per slice, on the current branch, staging only the paths that slice touched (never `git add -A`). If one of those files already had uncommitted changes at kickoff, ask before committing it. Subagents never commit.
 - T0/T1: commit only when the user asks. Push only when the user asks, at every tier.
