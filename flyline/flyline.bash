@@ -98,6 +98,9 @@ if _flyline_load; then
       --system-prompt "Be concise. Answer with a JSON array of at most 3 items with objects containing: command and description. Command will be a Bash command. " \
       --trigger-prefix ': ' \
       --command 'claude --effort low --print'
+
+  flyline history --backend flyline
+  flyline editor --inline-history-prefer cwd
 else
   # Basic fallback: plain prompt (16-color ANSI only), user@host over SSH
   PS1='\[\e[1;34m\]\w\[\e[0m\]\n\[\e[1;32m\]>\[\e[0m\] '
