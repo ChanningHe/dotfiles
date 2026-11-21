@@ -34,7 +34,7 @@ Which tier uses what:
 .shoal-dev/                 at the repo root; never committed (.shoal-dev/.gitignore contains "*")
   INDEX.md             active items, learnings, out-of-scope ideas
   <YYMMDD-slug>/       one work item
-    design.md          base commit, problem (your words), unknowns, rulings, design, how we verify
+    design.md          base commit, problem (your words), goal, unknowns, rulings, design, how we verify, commits
     research.md        researcher's notes, when unknowns needed one
     design.review.md   architect's challenge of the draft (T3 / escalation list)
     ledger.md          T3 state: status, next step, decisions, open issues
