@@ -14,6 +14,7 @@ Documentation is not a dev diary; it's a user manual for future maintainers.
 
 - **✅ Must create**: Completed a full Feature module, introduced new architecture pattern, or added new public API
 - **❌ Forbidden**: Just fixed a bug, refactored internal private method, or adjusted styles. Don't pollute `/docs/` with fragmented docs
+- **Not here**: the project's root `README.md` is for first-time users; use the `readme` skill for it
 
 ## File Path & Naming
 
