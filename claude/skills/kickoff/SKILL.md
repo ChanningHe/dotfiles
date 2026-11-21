@@ -25,7 +25,7 @@ Create the work record for one item, design it on verified facts, then stop for 
 6. T3 or escalation list: dispatch `architect` to challenge the draft, with the `design.md` path and the note path `ITEM/design.review.md` (written in Chinese). One round. Fold in what you accept; record what you reject as a Ruling with the reason.
 7. T3 only: fill `ITEM/ledger.md` (Status, Next, Decisions, Running lanes, Open issues, References), at most 40 lines.
 8. Add a row to the Active table in `.shoal-dev/INDEX.md`: `| <id> | <tier> | design | <next step> |`, where `<id>` is the item directory name.
-9. STOP. Show the item path, the goal restated in one plain sentence, a 3-line summary of the design, and any Unknown still open, and ask the user to approve it; say that approval also authorizes one commit per accepted slice on the current branch (never a push). Do not implement or dispatch implementation before approval.
+9. STOP. Put the design in the chat, not only in the file: the goal restated in one plain sentence, then the full text of `design.md` (T3: Rulings, Design, Slices and How we verify in full; the rest summarized), any Unknown still open, and the item path last. The user must be able to approve or push back from the chat alone, without opening a file. Ask the user to approve it; say that approval also authorizes one commit per accepted slice on the current branch (never a push). Do not implement or dispatch implementation before approval.
 
 If the init.sh stderr reported a legacy `dev/docs` or `dev/tasks`, offer to move that content to `.shoal-dev/legacy/`. Ask first. Never move automatically. Move only what the user confirms.
 

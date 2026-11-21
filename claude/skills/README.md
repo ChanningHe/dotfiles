@@ -17,7 +17,7 @@ Five skills drive the tiered workflow (`../rules/workflow.md`) and keep work rec
 
 | Command | Use it when | What it does |
 |---|---|---|
-| `/kickoff <slug> [T2\|T3]` | Starting a multi-file change or anything that needs a design (default T2); Claude also invokes it on its own when a task sizes as T2/T3 | Creates `.shoal-dev/<YYMMDD-slug>/`, resolves the design's unknowns (reading code, or `researcher`), drafts `design.md` (plus `ledger.md` for T3), has `architect` challenge a T3 or escalation-list draft, adds it to `INDEX.md`, then **stops for your approval** |
+| `/kickoff <slug> [T2\|T3]` | Starting a multi-file change or anything that needs a design (default T2); Claude also invokes it on its own when a task sizes as T2/T3 | Creates `.shoal-dev/<YYMMDD-slug>/`, resolves the design's unknowns (reading code, or `researcher`), drafts `design.md` (plus `ledger.md` for T3), has `architect` challenge a T3 or escalation-list draft, adds it to `INDEX.md`, prints the design in the chat, then **stops for your approval** |
 | `delegate` | Claude uses it on its own when handing a slice to a subagent; you can also type `/delegate` | Writes `sN.brief.md`, dispatches the right agent with only that path, spot-checks the report, commits the accepted slice, updates the ledger |
 | `/checkpoint` | A milestone is reached, you are pausing, or the context is getting long (T3) | Rewrites `ledger.md` in place (≤ 40 lines), updates `INDEX.md`, tells you if it is a good moment for a new session |
 | `/pickup [id]` | Starting a new session on existing work | Reads `INDEX.md` → ledger → only the files it references, checks them against `git log` and `.claude/check`, then confirms the next step with you |

@@ -47,6 +47,7 @@ Language expertise lives in the model, not in per-language agents. Docs, summari
 
 - Work records live in `.shoal-dev/` at the repo root (`INDEX.md`, one `<YYMMDD-slug>/` per T2/T3 item, `learnings/`, `archive/`). `.shoal-dev/.gitignore` contains `*`; never commit `.shoal-dev/`.
 - Everything under `.shoal-dev/` is written in Chinese, by the main thread and by subagents alike. Section headings, fixed keys (`Base:`, `Ruling:`), code, commands, paths and identifiers stay in English; the user's words are quoted as written. Code and code comments stay in English.
+- Files are the record, the chat is the interface: anything the user has to approve, decide or react to (a design, a review's findings, a tombstone) is shown in the chat in full enough to act on, with the path as a footnote. Never answer with only "see the file".
 - One milestone per session: `/checkpoint` rewrites the ledger in place and tells the user when to start a new session; `/pickup` resumes; `/finish` closes an item (learnings bar, tombstone, prune).
 - Legacy `dev/docs` / `dev/tasks`: offer to migrate into `.shoal-dev/` when you touch that project; never move without asking.
 
