@@ -144,6 +144,5 @@
       "**Trusted repo**: The git repository at /home/channinghe/dev/rustdesk-admin (its working directory); no remotes are currently configured",
       "**Org-specific CLIs**: None configured"
     ]
-  },
-  "model": "fable"
+  }
 }
