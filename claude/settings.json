@@ -113,6 +113,7 @@
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "light",
+  "disableClaudeAiConnectors": true,
   "switchModelsOnFlag": true,
   "wheelScrollAccelerationEnabled": false,
   "agentPushNotifEnabled": true,
