@@ -17,7 +17,11 @@ Read those first; read further code only as far as the review needs. If the task
 - Does the change meet the brief? Missing scope and out-of-scope extras are both defects.
 - Correctness bugs, broken invariants, unhandled errors, concurrency hazards, resource leaks.
 - On escalation-list changes, think like an attacker: trust boundaries, authz, injection, secret handling, unsafe deserialization.
-- What can be deleted or merged without changing behavior.
+- Tests, judged by `sharp-testing` (load the skill when the diff touches tests or fixes a bug): a bug fix without a
+  regression test that fails for the bug's reason, or a risky change no check guards, is a defect. So is a test that
+  cannot catch its claimed mistake (expectation copied from the output, a mock that proves the mock, asserted copy)
+  or an export whose only caller is a test.
+- What can be deleted or merged without changing behavior, tests included.
 
 ## Output contract
 - Only CRITICAL and HIGH findings, max 10, each with `file:line`, evidence, and a concrete fix. No style nits.

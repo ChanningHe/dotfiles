@@ -10,7 +10,7 @@
 
 ## Tests
 
-- Every behavior change ships with a test that fails without the change; bug fixes start with the failing regression test.
-- Test behavior, not implementation; no tests for cases that cannot happen. No global coverage quota: judge coverage of the changed code.
+- A test earns its place by catching a plausible mistake that no other check catches; the default for a change is no new test. Before adding or changing a unit or integration test, load the `sharp-testing` skill.
+- Bug fixes start with one failing regression test at the owning boundary.
 - Run the relevant tests (or `.claude/check`) before claiming done. Report failures with their output; never hide or skip them.
 - If fixes start stacking on fixes, stop patching: re-read the failure from scratch and bring the root-cause question to the user.

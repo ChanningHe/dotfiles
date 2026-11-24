@@ -8,3 +8,4 @@ References && License:
 - [alvinunreal/oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim) (agent roster and routing style)
 - [kingkongshot/prompts with Apache License](https://github.com/kingkongshot/prompts)
 - [intellectronica/agent-skills](https://github.com/intellectronica/agent-skills)
+- [paleo/paleo-skills with CC0 1.0](https://github.com/paleo/paleo-skills) (`sharp-testing`)
